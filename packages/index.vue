@@ -4,14 +4,35 @@
       <!-- 左侧字段 -->
       <el-aside :width="leftWidth">
         <div class="fields-list">
+          <div v-for="(field, index) in fields" :key="index">
+            <template
+              v-if="field.list.find((f) => includeFields.includes(f.type))"
+            >
+              <div class="field-title">{{ field.title }}</div>
+              <draggable
+                tag="ul"
+                :list="field.list"
+                :group="{ name: 'form', pull: 'clone', put: false }"
+                ghost-class="ghost"
+                :sort="false"
+              >
+                <template v-for="(item, index) in field.list">
+                  <li
+                    class="field-label"
+                    v-if="includeFields.includes(item.type)"
+                    :key="index"
+                  >
+                    <a @click="handleFieldClick(item)">
+                      <i class="icon iconfont" :class="item.icon"></i>
+                      <span>{{ item.title || item.label }}</span>
+                    </a>
+                  </li>
+                </template>
+              </draggable>
+            </template>
+          </div>
           <template v-if="customFields && customFields.length > 0">
-            <el-link
-              class="field-title"
-              :underline="false"
-              href="https://github.com/sscfaith/avue-form-design/blob/master/CHANGELOG.md#2020-09-22"
-              target="_blank"
-              >自定义字段 <i class="el-icon-question"></i
-            ></el-link>
+            <el-link class="field-title" :underline="false">其他字段</el-link>
             <draggable
               tag="ul"
               :list="customFields"
@@ -46,33 +67,6 @@
               </template>
             </draggable>
           </template>
-          <div v-for="(field, index) in fields" :key="index">
-            <template
-              v-if="field.list.find((f) => includeFields.includes(f.type))"
-            >
-              <div class="field-title">{{ field.title }}</div>
-              <draggable
-                tag="ul"
-                :list="field.list"
-                :group="{ name: 'form', pull: 'clone', put: false }"
-                ghost-class="ghost"
-                :sort="false"
-              >
-                <template v-for="(item, index) in field.list">
-                  <li
-                    class="field-label"
-                    v-if="includeFields.includes(item.type)"
-                    :key="index"
-                  >
-                    <a @click="handleFieldClick(item)">
-                      <i class="icon iconfont" :class="item.icon"></i>
-                      <span>{{ item.title || item.label }}</span>
-                    </a>
-                  </li>
-                </template>
-              </draggable>
-            </template>
-          </div>
         </div>
       </el-aside>
       <!-- 中间主布局 -->
@@ -705,7 +699,7 @@ export default {
                 } else delete col.dicQueryConfig;
               }
               delete col.dicOption;
-            } else if (["upload","imgupload"].includes(col.type)) {
+            } else if (["upload", "imgupload"].includes(col.type)) {
               if (col.headersConfig && col.headersConfig.length > 0) {
                 const headers = {};
                 col.headersConfig.forEach((h) => {
@@ -724,17 +718,29 @@ export default {
               } else delete col.data;
               delete col.dataConfig;
             }
-            const clone = this.deepClone(col)
-            if (col.change) col.change = function(){eval(clone.change)};
+            const clone = this.deepClone(col);
+            if (col.change)
+              col.change = function () {
+                eval(clone.change);
+              };
             else delete col.change;
 
-            if (col.click) col.event.click = function(){eval(clone.click)};
+            if (col.click)
+              col.event.click = function () {
+                eval(clone.click);
+              };
             else delete col.click;
 
-            if (col.focus) col.focus = function(){eval(clone.focus)};
+            if (col.focus)
+              col.focus = function () {
+                eval(clone.focus);
+              };
             else delete col.focus;
 
-            if (col.blur) col.blur = function(){eval(clone.blur)};
+            if (col.blur)
+              col.blur = function () {
+                eval(clone.blur);
+              };
             else delete col.blur;
 
             data.column[i] = col;
@@ -791,7 +797,7 @@ export default {
                 if (col.dicUrl) col.dicOption = "remote";
                 else col.dicOption = "static";
                 if (!col.dicData) col.dicData = [];
-              } else if (["upload","imgupload"].includes(col.type)) {
+              } else if (["upload"].includes(col.type)) {
                 if (col.headers && typeof col.headers == "object") {
                   const arr = [];
                   for (let key in col.headers) {

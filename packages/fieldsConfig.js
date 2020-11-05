@@ -1,3 +1,4 @@
+import areaList from './utils/area';
 export default[
     {
         title: '基础字段',
@@ -170,12 +171,9 @@ export default[
                 showFileList: true,
                 multiple: true,
                 limit: 10,
-                action: "/base/fileOperation",
+                action: "",
                 propsHttp: {
-                    home: `${
-                        location.origin
-                    }/base/fileOperation/downloadFile2?path=`,
-                    url: "data"
+                    url: ""
                 },
                 canvasOption: {},
                 headersConfig: [],
@@ -196,12 +194,9 @@ export default[
                 canvasOption: {},
                 headersConfig: [],
                 dataConfig: [],
-                action: "/base/fileOperation",
+                action: "",
                 propsHttp: {
-                    home: `${
-                        location.origin
-                    }/base/fileOperation/downloadFile2?path=`,
-                    url: "data"
+                    url: ""
                 }
             },
             {
@@ -268,6 +263,65 @@ export default[
                 params: {
                     html: '点我！'
                 }
+            }, {
+                type: 'title',
+                icon: 'icon-title',
+                span: 24,
+                display: true,
+                styles: {
+                    fontSize: '18px',
+                    color: '#000'
+                },
+                label: '标题',
+                labelWidth: '0px',
+                value: '标题'
+            }, {
+                type: "ptag",
+                label: "文本",
+                icon: 'icon-title',
+                display: true,
+                event: {},
+                component: "span",
+                span: 24,
+                params: {
+                    html: '这里是一段文本'
+                }
+            }, {
+                type: "divider",
+                label: "分隔符",
+                icon: "icon-input",
+                display: true,
+                event: {},
+                component: "el-divider",
+                span: 24,
+                params: {
+                    html: ''
+                }
+            }, {
+                type: 'cascader',
+                label: '省市级联动',
+                icon: 'icon-link',
+                span: 24,
+                display: true,
+                dicData: areaList,
+                cascaderIndex: 1,
+                showAllLevels: true,
+                dicOption: 'static',
+                iscity: true,
+                separator: "/",
+                props: {
+                    label: 'label',
+                    value: 'value',
+                    span: 24,
+                    display: true
+                }
+            }, {
+                type: 'map',
+                component: 'avue-input-map',
+                label: '地图选择器',
+                icon: 'icon-map',
+                span: 24,
+                display: true
             }
         ]
     }, {
@@ -284,56 +338,58 @@ export default[
                     column: []
                 }
             }, {
-                type: 'title',
-                icon: 'icon-title',
+                type: 'dynamic',
+                label: '子表单',
+                icon: 'icon-table',
                 span: 24,
                 display: true,
-                styles: {
-                    fontSize: '18px',
-                    color: '#000'
-                },
-                label: '标题',
-                labelWidth: '0px',
-                value: '标题'
+                children: {
+                    align: 'center',
+                    headerAlign: 'center',
+                    index: false,
+                    addBtn: true,
+                    delBtn: true,
+                    column: []
+                }
             }
         ]
     }, {
-        title: 'XINSOFT字段',
+        title: '定制字段',
         list: [
-            {
-                type: 'icon',
-                label: '图标',
-                component: 'avue-input-icon',
-                icon: 'icon-icon',
-                span: 24,
-                display: true,
-                params: {
-                    iconList: [
-                        {
-                            label: '基本图标',
-                            list: [
-                                'el-icon-info',
-                                'el-icon-error',
-                                'el-icon-success',
-                                'el-icon-warning',
-                                'el-icon-question'
-                            ]
-                        }, {
-                            label: '方向图标',
-                            list: [
-                                'el-icon-back',
-                                'el-icon-arrow-left',
-                                'el-icon-arrow-down',
-                                'el-icon-arrow-right',
-                                'el-icon-arrow-up'
-                            ]
-                        }, {
-                            label: '符号图标',
-                            list: ['el-icon-plus', 'el-icon-minus', 'el-icon-close', 'el-icon-check']
-                        }
-                    ]
-                }
-            }
+            // {
+            //     type: 'icon',
+            //     label: '图标',
+            //     component: 'avue-input-icon',
+            //     icon: 'icon-icon',
+            //     span: 24,
+            //     display: true,
+            //     params: {
+            //         iconList: [
+            //             {
+            //                 label: '基本图标',
+            //                 list: [
+            //                     'el-icon-info',
+            //                     'el-icon-error',
+            //                     'el-icon-success',
+            //                     'el-icon-warning',
+            //                     'el-icon-question'
+            //                 ]
+            //             }, {
+            //                 label: '方向图标',
+            //                 list: [
+            //                     'el-icon-back',
+            //                     'el-icon-arrow-left',
+            //                     'el-icon-arrow-down',
+            //                     'el-icon-arrow-right',
+            //                     'el-icon-arrow-up'
+            //                 ]
+            //             }, {
+            //                 label: '符号图标',
+            //                 list: ['el-icon-plus', 'el-icon-minus', 'el-icon-close', 'el-icon-check']
+            //             }
+            //         ]
+            //     }
+            // }
         ]
     }
 ]

@@ -32,14 +32,14 @@
                       clearable
                       placeholder="标题"></el-input>
           </el-form-item>
-          <el-form-item label="显示文字" v-if="data.params.html">
+          <el-form-item label="显示文字" v-if="data.params&&data.params.html">
             <el-input v-model="data.params.html"
                       clearable
                       placeholder="显示文字"></el-input>
           </el-form-item>
-          <el-form-item>
+          <!-- <el-form-item>
             <el-checkbox v-model="data.labelHide" style="float:right">隐藏标题</el-checkbox>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="宽度"
                         v-if="data.subfield">
             <el-input-number v-model="data.width"

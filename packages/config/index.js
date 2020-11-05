@@ -19,40 +19,48 @@ import Map from './map.vue'
 import Group from './group.vue'
 import Array from './array.vue'
 import Title from './title.vue'
+import Ptag from './ptag.vue'
 
 const components = [
-  Custom,
-  Input,
-  Textarea,
-  Number,
-  Dynamic,
-  Switch,
-  Rate,
-  Slider,
-  Color,
-  Radio,
-  Checkbox,
-  Select,
-  Cascader,
-  Tree,
-  Date,
-  UEditor,
-  Upload,
-  Map,
-  Group,
-  Array,
-  Title
+    Custom,
+    Input,
+    Textarea,
+    Number,
+    Dynamic,
+    Switch,
+    Rate,
+    Slider,
+    Color,
+    Radio,
+    Checkbox,
+    Select,
+    Cascader,
+    Tree,
+    Date,
+    UEditor,
+    Upload,
+    Map,
+    Group,
+    Array,
+    Title,
+    Ptag,
 ]
 
 const Config = {
-  install (Vue) {
-    if (this.installed) return
-    this.installed = true
+    install(Vue) {
+        if (this.installed) 
+            return
 
-    components.map(component => {
-      Vue.component(component.name, component);
-    })
-  }
+
+        
+
+
+        this.installed = true
+
+        components.map(component => {
+            Vue.component(component.name, component);
+        })
+    }
 }
 
 export default Config

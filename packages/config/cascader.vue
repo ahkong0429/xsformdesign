@@ -4,11 +4,11 @@
       <el-input v-model="data.placeholder"
                 placeholder="占位内容"></el-input>
     </el-form-item>
-    <el-form-item label="默认值">
+    <el-form-item label="默认值" v-if="!data.iscity">
       <el-input v-model="data.value"
                 placeholder="默认值"></el-input>
     </el-form-item>
-    <el-form-item label="字典配置"><br>
+    <el-form-item label="字典配置" v-if="!data.iscity"><br>
       <el-tabs v-model="data.dicOption"
                stretch
                @tab-click="handleTabClick">
@@ -16,10 +16,10 @@
                      name="static">
           <el-tree ref="tree"
                    :data="data.dicData"
-                   default-expand-all
                    draggable
                    node-key="value"
-                   :expand-on-click-node="false">
+                   :expand-on-click-node="false"
+                   v-if="!data.iscity">
             <span class="custom-tree-node"
                   slot-scope="{ node, data }">
               <span>{{ node.label }}</span>
@@ -66,7 +66,7 @@
         </el-tab-pane>
       </el-tabs>
     </el-form-item>
-    <el-form-item label="字典key配置">
+    <el-form-item label="字典key配置" v-if="!data.iscity">
       <ul>
         <li v-for="(value, key) in data.props"
             :key="key">
