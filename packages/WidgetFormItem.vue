@@ -38,13 +38,15 @@ export default {
       },
     },
   },
-  data() {
+  data () {
     return {
       form: {},
     };
   },
+  mounted () {
+  },
   methods: {
-    getComponent(type, component) {
+    getComponent (type, component) {
       let KEY_COMPONENT_NAME = "avue-";
       let result = "input";
       if (component) return component;
@@ -78,10 +80,14 @@ export default {
       else if (type === "icon") result = "input-icon";
       else if (type === "color") result = "input-color";
       else if (type === "map") result = "input-map";
+      else if (type === "tabs") result = "tabs";
       return KEY_COMPONENT_NAME + result;
     },
-    getPlaceholder(item) {
+    getPlaceholder (item) {
       const label = item.label;
+      if (['tabs'].includes(item.type)) {
+        return ''
+      }
       if (
         [
           "select",

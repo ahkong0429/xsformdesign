@@ -1,11 +1,12 @@
 <template>
   <div class="widget-config">
-    <el-form label-suffix="："
-             v-if="this.data && Object.keys(this.data).length > 0"
-             size="small">
+    <el-form
+      label-suffix="："
+      v-if="this.data && Object.keys(this.data).length > 0"
+      size="small"
+    >
       <el-collapse v-model="collapse">
-        <el-collapse-item name="1"
-                          title="基本属性">
+        <el-collapse-item name="1" title="基本属性">
           <!-- <el-form-item label="类型"
                         v-if="data.type && !data.component">
             <el-select v-model="data.type"
@@ -23,97 +24,130 @@
             </el-select>
           </el-form-item> -->
           <el-form-item label="属性值">
-            <el-input v-model="data.prop"
-                      clearable
-                      placeholder="属性值"></el-input>
+            <el-input
+              v-model="data.prop"
+              clearable
+              placeholder="属性值"
+            ></el-input>
           </el-form-item>
           <el-form-item label="标题">
-            <el-input v-model="data.label"
-                      clearable
-                      placeholder="标题"></el-input>
+            <el-input
+              v-model="data.label"
+              clearable
+              placeholder="标题"
+            ></el-input>
           </el-form-item>
-          <el-form-item label="显示文字" v-if="data.params&&data.params.html">
-            <el-input v-model="data.params.html"
-                      clearable
-                      placeholder="显示文字"></el-input>
+          <el-form-item label="显示文字" v-if="data.params && data.params.html">
+            <el-input
+              v-model="data.params.html"
+              clearable
+              placeholder="显示文字"
+            ></el-input>
           </el-form-item>
           <!-- <el-form-item>
             <el-checkbox v-model="data.labelHide" style="float:right">隐藏标题</el-checkbox>
           </el-form-item> -->
-          <el-form-item label="宽度"
-                        v-if="data.subfield">
-            <el-input-number v-model="data.width"
-                             controls-position="right"
-                             placeholder="宽度"
-                             :min="100"></el-input-number>
+          <el-form-item label="宽度" v-if="data.subfield">
+            <el-input-number
+              v-model="data.width"
+              controls-position="right"
+              placeholder="宽度"
+              :min="100"
+            ></el-input-number>
           </el-form-item>
-          <el-form-item label="表单栅格"
-                        v-if="!data.subfield && !['group'].includes(data.type)">
-            <el-input-number v-model="data.span"
-                             controls-position="right"
-                             placeholder="表单栅格"
-                             :min="8"
-                             :max="24"></el-input-number>
+          <el-form-item
+            label="表单栅格"
+            v-if="!data.subfield && !['group'].includes(data.type)"
+          >
+            <el-input-number
+              v-model="data.span"
+              controls-position="right"
+              placeholder="表单栅格"
+              :min="1"
+              :max="24"
+            ></el-input-number>
           </el-form-item>
-          <el-form-item label="数据类型"
-                        v-if="['cascader','checkbox','upload','imgupload','img','array'].includes(data.type)">
-            <el-select v-model="data.dataType"
-                       placeholder="数据类型"
-                       clearable>
-              <el-option label="String"
-                         value="string"></el-option>
-              <el-option label="Number"
-                         value="number"></el-option>
+          <el-form-item
+            label="数据类型"
+            v-if="
+              [
+                'cascader',
+                'checkbox',
+                'upload',
+                'imgupload',
+                'img',
+                'array',
+              ].includes(data.type)
+            "
+          >
+            <el-select v-model="data.dataType" placeholder="数据类型" clearable>
+              <el-option label="String" value="string"></el-option>
+              <el-option label="Number" value="number"></el-option>
             </el-select>
-            &nbsp;<a href="https://avuejs.com/doc/dataType"
-               target="_blank"
-               style="color: #409EFF;">详情</a><br>
+            &nbsp;<a
+              href="https://avuejs.com/doc/dataType"
+              target="_blank"
+              style="color: #409eff"
+              >详情</a
+            ><br />
           </el-form-item>
-          <el-form-item label="深结构"
-                        v-if="data.type && !data.component">
-            <a href="https://avuejs.com/doc/form/form-bind"
-               target="_blank"
-               style="color: #409EFF;">详情</a><br>
-            <el-input v-model="data.bind"
-                      placeholder="深结构"></el-input>
+          <el-form-item label="深结构" v-if="data.type && !data.component">
+            <a
+              href="https://avuejs.com/doc/form/form-bind"
+              target="_blank"
+              style="color: #409eff"
+              >详情</a
+            ><br />
+            <el-input v-model="data.bind" placeholder="深结构"></el-input>
           </el-form-item>
-          <component :is="getComponent"
-                     :data="data"></component>
+          <component :is="getComponent" :data="data"></component>
         </el-collapse-item>
-        <el-collapse-item name="2"
-                          title="事件属性"
-                          v-if="!['group', 'dynamic'].includes(data.type)">
+        <el-collapse-item
+          name="2"
+          title="事件属性"
+          v-if="!['group', 'dynamic'].includes(data.type)"
+        >
           <el-form-item label="change">
-            <avue-input v-model="data.change"
-                        type="textarea"
-                        placeholder="改变事件"
-                        rows="5"
-                        clearable></avue-input>
+            <avue-input
+              v-model="data.change"
+              type="textarea"
+              placeholder="改变事件"
+              rows="5"
+              clearable
+            ></avue-input>
           </el-form-item>
           <el-form-item label="click">
-            <el-input v-model="data.click"
-                      type="textarea"
-                      placeholder="点击事件"
-                      rows="5"></el-input>
+            <el-input
+              v-model="data.click"
+              type="textarea"
+              placeholder="点击事件"
+              rows="5"
+            ></el-input>
           </el-form-item>
           <el-form-item label="focus">
-            <el-input v-model="data.focus"
-                      type="textarea"
-                      placeholder="获取焦点事件"
-                      rows="5"></el-input>
+            <el-input
+              v-model="data.focus"
+              type="textarea"
+              placeholder="获取焦点事件"
+              rows="5"
+            ></el-input>
           </el-form-item>
           <el-form-item label="blur">
-            <el-input v-model="data.blur"
-                      type="textarea"
-                      placeholder="失去焦点事件"
-                      rows="5"></el-input>
+            <el-input
+              v-model="data.blur"
+              type="textarea"
+              placeholder="失去焦点事件"
+              rows="5"
+            ></el-input>
           </el-form-item>
         </el-collapse-item>
       </el-collapse>
     </el-form>
-    <avue-empty v-else
-                desc="拖拽字段进行配置"
-                style="margin-top: 100%;"></avue-empty>
+    <avue-empty
+      v-else
+      desc="拖拽字段进行配置"
+      style="margin-top: 100%"
+    ></avue-empty>
   </div>
 </template>
 
@@ -128,7 +162,7 @@ export default {
   name: 'widget-config',
   props: ['data'],
   computed: {
-    getComponent() {
+    getComponent () {
       const prefix = 'config-'
       const { type, component } = this.data
       if (!type || component) return prefix + 'custom'
@@ -142,14 +176,14 @@ export default {
       return prefix + result
     }
   },
-  data() {
+  data () {
     return {
       fields,
       collapse: "1"
     }
   },
   methods: {
-    async handleChangeType(type) {
+    async handleChangeType (type) {
       if (type) {
         const config = await this.getConfigByType(type);
         config.prop = this.data.prop;
@@ -161,7 +195,7 @@ export default {
         }
       }
     },
-    getConfigByType(type) {
+    getConfigByType (type) {
       return new Promise((resolve, reject) => {
         fields.forEach(field => {
           field.list.forEach(config => {

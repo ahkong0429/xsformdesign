@@ -93,7 +93,7 @@
             </template>
           </div>
           <div style="display: flex; align-items: center">
-            <iframe
+            <!-- <iframe
               src="https://ghbtns.com/github-btn.html?user=sscfaith&repo=avue-form-design&type=star&count=true"
               frameborder="0"
               scrolling="0"
@@ -102,16 +102,16 @@
               title="GitHub"
               style="margin-left: 10px"
               v-if="showGithubStar"
-            ></iframe>
+            ></iframe> -->
             <slot name="toolbar-left"></slot>
-            <el-button
+            <!-- <el-button
               v-if="toolbar.includes('avue-doc')"
               type="text"
               size="medium"
               icon="el-icon-document"
               @click="handleAvueDoc"
               >Avue文档</el-button
-            >
+            > -->
             <el-button
               v-if="toolbar.includes('import')"
               type="text"
@@ -135,6 +135,14 @@
               icon="el-icon-view"
               @click="handlePreview"
               >预览</el-button
+            >
+            <el-button
+              v-if="toolbar.includes('save')"
+              type="text"
+              size="medium"
+              icon="el-icon-check"
+              @click="handleSaveJson"
+              >保存</el-button
             >
             <el-button
               v-if="toolbar.includes('clear')"
@@ -167,9 +175,6 @@
       <!-- 右侧配置 -->
       <el-aside class="widget-config-container" :width="rightWidth">
         <el-tabs v-model="configTab" stretch>
-          <el-tab-pane label="字段属性" name="widget" style="padding: 0 10px">
-            <widget-config :data="widgetFormSelect"></widget-config>
-          </el-tab-pane>
           <el-tab-pane
             label="表单属性"
             name="form"
@@ -177,6 +182,9 @@
             style="padding: 0 10px"
           >
             <form-config :data="widgetForm"></form-config>
+          </el-tab-pane>
+          <el-tab-pane label="字段属性" name="widget" style="padding: 0 10px">
+            <widget-config :data="widgetFormSelect"></widget-config>
           </el-tab-pane>
         </el-tabs>
       </el-aside>
@@ -266,16 +274,16 @@
               type="primary"
               slot="reference"
               @click="handleGenerate"
-              >生成</el-button
+              >保存</el-button
             >
           </el-popover>
-          <el-button
+          <!-- <el-button
             size="medium"
             type="primary"
             @click="handleCopy"
             style="margin-left: 10px"
             >复制</el-button
-          >
+          > -->
         </div>
       </el-drawer>
       <!-- 预览 -->
@@ -352,7 +360,7 @@ export default {
     toolbar: {
       type: Array,
       default: () => {
-        return ["import", "generate", "preview", "clear"];
+        return ["import", "generate", "preview", "save", "clear"];
       },
     },
     undoRedo: {
@@ -377,7 +385,7 @@ export default {
   },
   watch: {
     options: {
-      handler(val) {
+      handler (val) {
         let options = val;
         if (typeof options == "string") {
           try {
@@ -395,14 +403,14 @@ export default {
     },
   },
   computed: {
-    leftWidth() {
+    leftWidth () {
       if (typeof this.asideLeftWidth == "string") {
         return this.asideLeftWidth;
       } else {
         return `${this.asideLeftWidth}px`;
       }
     },
-    rightWidth() {
+    rightWidth () {
       if (typeof this.asideRightWidth == "string") {
         return this.asideRightWidth;
       } else {
@@ -410,7 +418,7 @@ export default {
       }
     },
   },
-  data() {
+  data () {
     return {
       widgetEmpty,
       fields,
@@ -428,7 +436,7 @@ export default {
         menuPosition: "center",
       },
       widgetFormPreview: {},
-      configTab: "widget",
+      configTab: "form",
       widgetFormSelect: {},
       previewVisible: false,
       generateJsonVisible: false,
@@ -445,13 +453,13 @@ export default {
       },
     };
   },
-  mounted() {
+  mounted () {
     this.handleLoadStorage();
     this.handleLoadCss();
   },
   methods: {
     // 组件初始化时加载本地存储中的options(需开启storage),若不存在则读取用户配置的options
-    async handleLoadStorage() {
+    async handleLoadStorage () {
       let options = this.options;
       if (typeof options == "string") {
         try {
@@ -500,7 +508,7 @@ export default {
       }
     },
     // 加载icon
-    handleLoadCss() {
+    handleLoadCss () {
       const head = document.getElementsByTagName("head")[0];
       const script = document.createElement("link");
       script.rel = "stylesheet";
@@ -510,11 +518,11 @@ export default {
       // this.loadScript('css', 'https://at.alicdn.com/t/font_1254447_zc9iezc230c.css')
     },
     // Avue文档链接
-    handleAvueDoc() {
+    handleAvueDoc () {
       window.open("https://avuejs.com/doc/form/form-doc", "_blank");
     },
     // 左侧字段点击
-    handleFieldClick(item) {
+    handleFieldClick (item) {
       const activeIndex =
         this.widgetForm.column.findIndex(
           (c) => c.prop == this.widgetFormSelect.prop
@@ -531,7 +539,7 @@ export default {
       this.$refs.widgetForm.handleWidgetAdd({ newIndex });
     },
     // 预览 - 弹窗
-    handlePreview() {
+    handlePreview () {
       if (!this.widgetForm.column || this.widgetForm.column.length == 0)
         this.$message.error("没有需要展示的内容");
       else {
@@ -542,7 +550,7 @@ export default {
       }
     },
     // 导入JSON - 弹窗 - 确定
-    handleImportJsonSubmit() {
+    handleImportJsonSubmit () {
       try {
         this.transAvueOptionsToFormDesigner(this.importJson).then((res) => {
           this.widgetForm = res;
@@ -554,14 +562,14 @@ export default {
       }
     },
     // 生成JSON - 弹窗
-    handleGenerateJson() {
+    handleGenerateJson () {
       this.transformToAvueOptions(this.widgetForm).then((data) => {
         this.widgetFormPreview = data;
         this.generateJsonVisible = true;
       });
     },
     // 生成JSON - 弹窗 - 确定
-    handleGenerate() {
+    handleGenerate () {
       this.transformToAvueOptions(this.widgetForm).then((data) => {
         if (
           this.configOption.generateType &&
@@ -577,7 +585,7 @@ export default {
       });
     },
     // 生成JSON - 弹窗 - 拷贝
-    handleCopy() {
+    handleCopy () {
       this.transformToAvueOptions(this.widgetForm).then((data) => {
         this.$Clipboard({
           text: beautifier(data, {
@@ -592,8 +600,18 @@ export default {
           });
       });
     },
+    handleSaveJson () {
+      this.transformToAvueOptions(this.widgetForm).then((data) => {
+        this.$emit(
+          "submit",
+          beautifier(data, {
+            minify: true,
+          })
+        );
+      });
+    },
     // 预览 - 弹窗 - 确定
-    handlePreviewSubmit(form, done) {
+    handlePreviewSubmit (form, done) {
       if (done) {
         this.$alert(this.widgetModels)
           .then(() => {
@@ -616,13 +634,13 @@ export default {
       }
     },
     // 预览 - 弹窗 - 关闭前
-    handleBeforeClose() {
+    handleBeforeClose () {
       this.$refs.form.resetForm();
       this.widgetModels = {};
       this.previewVisible = false;
     },
     // 清空
-    handleClear() {
+    handleClear () {
       if (
         this.widgetForm &&
         this.widgetForm.column &&
@@ -637,11 +655,11 @@ export default {
             this.$set(this, "widgetFormSelect", {});
             this.handleHistoryChange(this.widgetForm);
           })
-          .catch(() => {});
+          .catch(() => { });
       } else this.$message.error("没有需要清空的内容");
     },
     // 表单设计器配置项 转化为 Avue配置项
-    transformToAvueOptions(obj) {
+    transformToAvueOptions (obj) {
       return new Promise((resolve, reject) => {
         try {
           const data = this.deepClone(obj);
@@ -752,7 +770,7 @@ export default {
       });
     },
     // Avue配置项 转化为 表单设计器配置项
-    transAvueOptionsToFormDesigner(obj) {
+    transAvueOptionsToFormDesigner (obj) {
       if (typeof obj == "string") obj = eval("(" + obj + ")");
       const data = this.deepClone(obj);
       return new Promise((resolve, reject) => {
@@ -851,7 +869,7 @@ export default {
         }
       });
     },
-    async getData(type = "json") {
+    async getData (type = "json") {
       if (type == "string")
         return beautifier(await this.transformToAvueOptions(this.widgetForm), {
           minify: true,

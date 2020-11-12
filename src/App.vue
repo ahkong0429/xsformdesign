@@ -4,7 +4,6 @@
       style="height: 100vh"
       :options="options"
       @submit="handleSubmit"
-      storage
       :custom-fields="customFields"
     ></avue-form-design>
   </div>
@@ -13,7 +12,7 @@
 <script>
 export default {
   name: "app",
-  data() {
+  data () {
     return {
       customFields: [
         // {
@@ -66,7 +65,7 @@ export default {
     };
   },
   methods: {
-    handleSubmit(val) {
+    handleSubmit (val) {
       this.$message.success("查看控制台");
       console.log(val);
     },

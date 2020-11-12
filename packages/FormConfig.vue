@@ -6,6 +6,13 @@
       label-width="130px"
       size="small"
     >
+      <!-- 模型绑定做成列表选择 -->
+      <el-form-item label="表单名称">
+        <el-input v-model="formName" placeholder="表单名称"></el-input>
+      </el-form-item>
+      <el-form-item label="表单编码">
+        <el-input v-model="formCode" placeholder="表单编码"></el-input>
+      </el-form-item>
       <el-form-item label="标签对齐方式">
         <el-select v-model="data.labelPosition" placeholder="标签对齐方式">
           <el-option label="左对齐" value="left"></el-option>
@@ -38,9 +45,9 @@
           style="width: 100%"
         ></el-input-number>
       </el-form-item>
-      <el-form-item label="多分组转标签">
+      <!-- <el-form-item label="多分组转标签">
         <el-switch v-model="data.tabs" active-color="#409EFF"></el-switch>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="详情模式">
         <el-switch v-model="data.detail"></el-switch>
       </el-form-item>
@@ -130,5 +137,15 @@
 export default {
   name: "form-config",
   props: ["data"],
+  data () {
+    const code = "FM" + Date.now()
+    return {
+      formName: code,
+      formCode: code
+    }
+  },
+  methods: {
+
+  }
 };
 </script>

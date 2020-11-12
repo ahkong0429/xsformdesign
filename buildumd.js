@@ -1,0 +1,5 @@
+const fs = require('fs')
+const os = require('os')
+const content = fs.readFileSync(__dirname + '/lib/index.umd.min.1.js')
+fs.appendFileSync(__dirname + '/lib/index.umd.min.js', os.EOL + content)
+fs.unlinkSync(__dirname + '/lib/index.umd.min.1.js')
