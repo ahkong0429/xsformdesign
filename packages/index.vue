@@ -419,11 +419,16 @@ export default {
     },
   },
   data () {
+    const code = "FM" + Date.now()
     return {
       widgetEmpty,
       fields,
       widgetForm: {
         column: [],
+        formName: code,
+        formCode: code,
+        submitUrl: '',
+        submitMethod: 'POST',
         labelPosition: "left",
         labelSuffix: "：",
         labelWidth: 120,

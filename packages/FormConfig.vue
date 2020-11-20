@@ -8,10 +8,21 @@
     >
       <!-- 模型绑定做成列表选择 -->
       <el-form-item label="表单名称">
-        <el-input v-model="formName" placeholder="表单名称"></el-input>
+        <el-input v-model="data.formName" placeholder="表单名称"></el-input>
       </el-form-item>
       <el-form-item label="表单编码">
-        <el-input v-model="formCode" placeholder="表单编码"></el-input>
+        <el-input v-model="data.formCode" placeholder="表单编码"></el-input>
+      </el-form-item>
+      <el-form-item label="提交地址">
+        <el-input v-model="data.submitUrl" placeholder="提交地址"></el-input>
+      </el-form-item>
+      <el-form-item label="提交方式">
+        <el-select v-model="data.submitMethod" placeholder="提交方式">
+          <el-option label="POST" value="POST"></el-option>
+          <el-option label="GET" value="GET"></el-option>
+          <el-option label="PUT" value="PUT"></el-option>
+          <el-option label="DELETE" value="DELETE"></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="标签对齐方式">
         <el-select v-model="data.labelPosition" placeholder="标签对齐方式">
@@ -138,10 +149,7 @@ export default {
   name: "form-config",
   props: ["data"],
   data () {
-    const code = "FM" + Date.now()
     return {
-      formName: code,
-      formCode: code
     }
   },
   methods: {
